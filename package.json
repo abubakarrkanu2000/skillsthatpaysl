@@ -1,0 +1,11 @@
+{
+  "name": "skills-that-pay-system",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node tests/database.mjs && node tests/frontend.mjs"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.9"
+  }
+}

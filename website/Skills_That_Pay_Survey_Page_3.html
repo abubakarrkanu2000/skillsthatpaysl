@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Question 3 — Skills That Pay</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/survey.css">
+        <script src="js/system-config.js" defer></script>
+    <script src="js/api.js" defer></script>
+    <script src="js/survey.js" defer></script>
+</head>
+<body class="survey-page" data-question="3">
+    <header class="site-header">
+        <a class="brand" href="index.html" aria-label="Skills That Pay home"><img src="assets/images/stp-2026.png" alt="STP 2026" width="218" height="27"></a>
+        <a class="event-link" href="index.html#event">EVENT DETAILS ↗</a>
+    </header>
+    <main>
+        <section class="question-card">
+            <a class="back-link" href="Skills_That_Pay_Survey_Page_2.html">← Back</a>
+            <p class="progress">QUESTION 3 OF 8</p>
+            <form id="survey-form" data-key="skill_interest">
+                <fieldset aria-describedby="question-help">
+                    <legend id="question-title">Which skill are you most interested in learning?</legend>
+                    <p class="helper" id="question-help">Please select one option below, then click Next.</p>
+                    <div class="choices">
+                    <label class="choice"><input type="radio" name="skill_interest" value="Tech &amp; websites" required><span class="letter" aria-hidden="true">A</span><span>Tech &amp; websites</span></label>
+                    <label class="choice"><input type="radio" name="skill_interest" value="Marketing &amp; branding" required><span class="letter" aria-hidden="true">B</span><span>Marketing &amp; branding</span></label>
+                    <label class="choice"><input type="radio" name="skill_interest" value="Photography &amp; videography" required><span class="letter" aria-hidden="true">C</span><span>Photography &amp; videography</span></label>
+                    <label class="choice"><input type="radio" name="skill_interest" value="Trading" required><span class="letter" aria-hidden="true">D</span><span>Trading</span></label>
+                    <label class="choice"><input type="radio" name="skill_interest" value="Other" required><span class="letter" aria-hidden="true">E</span><span>Other</span></label>
+                    <label class="choice"><input type="radio" name="skill_interest" value="I’m not sure yet" required><span class="letter" aria-hidden="true">F</span><span>I’m not sure yet</span></label>
+                </div>
+                <div class="other-field" hidden><label for="other-answer">Please tell us more.</label><input id="other-answer" name="skill_interest_other" type="text" maxlength="200" disabled></div>
+                </fieldset>
+                <button type="submit">Next <span aria-hidden="true">→</span></button>
+                <p class="status" id="survey-status" role="status" aria-live="polite"></p>
+            </form>
+        </section>
+        <footer>Survey completion is required to be considered for a seat.<br>Selected attendees will receive confirmation.</footer>
+    </main>
+</body>
+</html>

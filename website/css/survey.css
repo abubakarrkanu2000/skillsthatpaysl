@@ -1,0 +1,54 @@
+
+        * { box-sizing: border-box; }
+        body { margin: 0; color: #f4f7f2; font-family: Montserrat, Arial, sans-serif; background: radial-gradient(ellipse at top, #143c20 0, #061a0c 45%, #030805 100%); min-height: 100svh; }
+        a { color: inherit; text-decoration: none; }
+        .site-header { max-width: 1240px; margin: auto; padding: 26px 6%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ffffff15; }
+        .brand { font-size: 19px; font-weight: 900; letter-spacing: -.7px; }
+        .brand img { display: block; width: 180px; height: auto; }
+        .event-link { font-size: 11px; letter-spacing: 1px; color: #bbc8bd; }
+        main { width: min(100% - 40px, 490px); margin: 52px auto 60px; }
+        .survey-prompt { padding: 18px 16px; text-align: center; text-transform: uppercase; font-size: 15px; font-weight: 800; color: #182009; border: 6px solid #42563a; border-radius: 999px; background: linear-gradient(105deg, #f1d04e 0%, #fff9b0 30%, #f4dc42 65%, #fff4a0 100%); box-shadow: inset 0 1px 0 #ffffffb3; }
+        .intro { text-align: center; margin: 38px 6px 32px; }
+        .step { display: inline-block; margin-bottom: 14px; padding: 9px 19px; border-radius: 999px; color: #052012; font-size: 12px; font-weight: 800; background: linear-gradient(110deg, #a5ffd0, #04b875); }
+        .intro h1 { font-size: clamp(20px, 5vw, 25px); line-height: 1.4; letter-spacing: -.6px; margin: 0 0 12px; }
+        .intro h1 span { color: #35dd83; }
+        .intro p { color: #b8c6bb; font-size: 13px; line-height: 1.7; margin: 0; }
+        .question-card { background: #fff; color: #151b17; border-radius: 18px; padding: 38px 30px 30px; box-shadow: 0 18px 50px #00000025; }
+        .question-card h2 { margin: 0 0 20px; font-size: 23px; font-weight: 600; letter-spacing: -.6px; line-height: 1.35; }
+        label { display: block; font-size: 14px; line-height: 1.6; margin-bottom: 12px; }
+        input { width: 100%; min-height: 54px; padding: 12px 15px; border: 1px solid #303a32; border-radius: 4px; background: #fff; color: #151b17; font: inherit; font-size: 18px; box-shadow: 0 3px 4px #00000016; }
+        input:focus-visible { outline: 3px solid #07b66a; outline-offset: 3px; }
+        button { display: inline-flex; align-items: center; gap: 18px; border: 0; margin-top: 26px; padding: 14px 29px; background: #00ae61; color: #fff; border-radius: 999px; font: inherit; font-size: 16px; font-weight: 700; cursor: pointer; }
+        button:hover { background: #008d4f; }
+        button:focus-visible, a:focus-visible { outline: 3px solid #d3ad30; outline-offset: 4px; }
+        .status { margin: 16px 0 0; font-size: 13px; line-height: 1.6; color: #506456; }
+        .status:empty { display: none; }
+        footer { margin-top: 26px; text-align: center; color: #8b9e91; font-size: 11px; line-height: 1.7; }
+        footer a { display: inline-block; margin-top: 14px; color: #d5dfd7; }
+        @media (max-width: 480px) { .site-header { padding: 22px 20px; } .brand img { width: 140px; } .event-link { font-size: 9px; } main { margin-top: 32px; } .question-card { padding: 32px 25px; } }
+    
+        .survey-page main { margin-top: 48px; }
+        .back-link { display: inline-block; color: #5d685f; font-size: 13px; margin-bottom: 28px; }
+        .progress { margin: 0 0 16px; color: #89988d; font-size: 11px; font-weight: 700; letter-spacing: 1px; }
+        fieldset { min-width: 0; border: 0; padding: 0; margin: 0; }
+        legend { width: 100%; margin-bottom: 20px; font-size: 23px; font-weight: 600; line-height: 1.45; letter-spacing: -.6px; }
+        .helper { color: #5d685f; font-size: 14px; line-height: 1.7; margin: 0 0 18px; }
+        .choices { display: grid; gap: 12px; }
+        .choice { position: relative; display: flex; align-items: center; gap: 12px; padding: 13px 14px; margin: 0; border: 1px solid #303a32; border-radius: 10px; box-shadow: 0 3px 4px #00000014; font-size: 14px; line-height: 1.5; cursor: pointer; }
+        .choice input { position: absolute; opacity: 0; width: 1px; height: 1px; min-height: 0; padding: 0; }
+        .choice .letter { display: grid; place-items: center; flex: 0 0 23px; height: 23px; background: #313832; color: #fff; border-radius: 4px; font-size: 12px; font-weight: 800; }
+        .choice:has(input:checked) { border-color: #00ae61; background: #e8fff1; box-shadow: 0 0 0 1px #00ae61; }
+        .choice:has(input:checked) .letter { background: #00ae61; }
+        .choice:has(input:focus-visible) { outline: 3px solid #d3ad30; outline-offset: 3px; }
+        textarea { width: 100%; min-height: 165px; padding: 16px; border: 1px solid #303a32; border-radius: 8px; color: #151b17; font: inherit; font-size: 15px; line-height: 1.7; resize: vertical; }
+        textarea:focus-visible { outline: 3px solid #07b66a; outline-offset: 3px; }
+        .other-field { margin-top: 20px; }
+        [hidden] { display: none !important; }
+        .error { color: #a22020; }
+        button:disabled { opacity: .65; cursor: wait; }
+        .success { text-align: center; }
+        .success-icon { display: grid; place-items: center; margin: 0 auto 24px; width: 64px; height: 64px; border-radius: 50%; background: #e8fff1; color: #00ae61; font-size: 34px; }
+        .save-date { margin: 25px 0; padding: 22px 16px; border-radius: 12px; background: #ecfaf1; }
+        .save-date strong { display: block; margin-top: 10px; font-size: 23px; line-height: 1.4; color: #06663a; }
+        .return-button { display: inline-block; padding: 14px 23px; border-radius: 999px; font-size: 14px; font-weight: 700; background: #00ae61; color: white; }
+        @media(max-width:480px) { .survey-page main { margin-top: 32px; } legend { font-size: 21px; } }

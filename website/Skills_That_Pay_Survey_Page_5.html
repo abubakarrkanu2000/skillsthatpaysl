@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Question 5 — Skills That Pay</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/survey.css">
+        <script src="js/system-config.js" defer></script>
+    <script src="js/api.js" defer></script>
+    <script src="js/survey.js" defer></script>
+</head>
+<body class="survey-page" data-question="5">
+    <header class="site-header">
+        <a class="brand" href="index.html" aria-label="Skills That Pay home"><img src="assets/images/stp-2026.png" alt="STP 2026" width="218" height="27"></a>
+        <a class="event-link" href="index.html#event">EVENT DETAILS ↗</a>
+    </header>
+    <main>
+        <section class="question-card">
+            <a class="back-link" href="Skills_That_Pay_Survey_Page_4.html">← Back</a>
+            <p class="progress">QUESTION 5 OF 8</p>
+            <form id="survey-form" data-key="biggest_obstacle">
+                <fieldset aria-describedby="question-help">
+                    <legend id="question-title">What is the biggest obstacle stopping you from earning through a skill?</legend>
+                    <p class="helper" id="question-help">Please select one option below, then click Next.</p>
+                    <div class="choices">
+                    <label class="choice"><input type="radio" name="biggest_obstacle" value="I don’t know what skill to learn" required><span class="letter" aria-hidden="true">A</span><span>I don’t know what skill to learn</span></label>
+                    <label class="choice"><input type="radio" name="biggest_obstacle" value="I need to improve my skill" required><span class="letter" aria-hidden="true">B</span><span>I need to improve my skill</span></label>
+                    <label class="choice"><input type="radio" name="biggest_obstacle" value="I don’t know how to find customers" required><span class="letter" aria-hidden="true">C</span><span>I don’t know how to find customers</span></label>
+                    <label class="choice"><input type="radio" name="biggest_obstacle" value="I don’t know how to sell or market myself" required><span class="letter" aria-hidden="true">D</span><span>I don’t know how to sell or market myself</span></label>
+                    <label class="choice"><input type="radio" name="biggest_obstacle" value="I don’t have enough money or resources to start" required><span class="letter" aria-hidden="true">E</span><span>I don’t have enough money or resources to start</span></label>
+                    <label class="choice"><input type="radio" name="biggest_obstacle" value="I don’t know where to begin" required><span class="letter" aria-hidden="true">F</span><span>I don’t know where to begin</span></label>
+                    <label class="choice"><input type="radio" name="biggest_obstacle" value="Other" required><span class="letter" aria-hidden="true">G</span><span>Other</span></label>
+                </div>
+                <div class="other-field" hidden><label for="other-answer">Please tell us more.</label><input id="other-answer" name="biggest_obstacle_other" type="text" maxlength="200" disabled></div>
+                </fieldset>
+                <button type="submit">Next <span aria-hidden="true">→</span></button>
+                <p class="status" id="survey-status" role="status" aria-live="polite"></p>
+            </form>
+        </section>
+        <footer>Survey completion is required to be considered for a seat.<br>Selected attendees will receive confirmation.</footer>
+    </main>
+</body>
+</html>

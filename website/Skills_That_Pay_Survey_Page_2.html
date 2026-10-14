@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Question 2 — Skills That Pay</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/survey.css">
+        <script src="js/system-config.js" defer></script>
+    <script src="js/api.js" defer></script>
+    <script src="js/survey.js" defer></script>
+</head>
+<body class="survey-page" data-question="2">
+    <header class="site-header">
+        <a class="brand" href="index.html" aria-label="Skills That Pay home"><img src="assets/images/stp-2026.png" alt="STP 2026" width="218" height="27"></a>
+        <a class="event-link" href="index.html#event">EVENT DETAILS ↗</a>
+    </header>
+    <main>
+        <section class="question-card">
+            <a class="back-link" href="Skills_That_Pay_Survey_Page_1.html">← Back</a>
+            <p class="progress">QUESTION 2 OF 8</p>
+            <form id="survey-form" data-key="current_situation">
+                <fieldset aria-describedby="question-help">
+                    <legend id="question-title">Which best describes your current situation?</legend>
+                    <p class="helper" id="question-help">Please select one option below, then click Next.</p>
+                    <div class="choices">
+                    <label class="choice"><input type="radio" name="current_situation" value="Secondary-school student" required><span class="letter" aria-hidden="true">A</span><span>Secondary-school student</span></label>
+                    <label class="choice"><input type="radio" name="current_situation" value="Secondary-school graduate" required><span class="letter" aria-hidden="true">B</span><span>Secondary-school graduate</span></label>
+                    <label class="choice"><input type="radio" name="current_situation" value="University or college student" required><span class="letter" aria-hidden="true">C</span><span>University or college student</span></label>
+                    <label class="choice"><input type="radio" name="current_situation" value="Graduate" required><span class="letter" aria-hidden="true">D</span><span>Graduate</span></label>
+                    <label class="choice"><input type="radio" name="current_situation" value="Employed" required><span class="letter" aria-hidden="true">E</span><span>Employed</span></label>
+                    <label class="choice"><input type="radio" name="current_situation" value="Freelancer" required><span class="letter" aria-hidden="true">F</span><span>Freelancer</span></label>
+                    <label class="choice"><input type="radio" name="current_situation" value="Business owner" required><span class="letter" aria-hidden="true">G</span><span>Business owner</span></label>
+                    <label class="choice"><input type="radio" name="current_situation" value="Other" required><span class="letter" aria-hidden="true">H</span><span>Other</span></label>
+                </div>
+                <div class="other-field" hidden><label for="other-answer">Please tell us more.</label><input id="other-answer" name="current_situation_other" type="text" maxlength="200" disabled></div>
+                </fieldset>
+                <button type="submit">Next <span aria-hidden="true">→</span></button>
+                <p class="status" id="survey-status" role="status" aria-live="polite"></p>
+            </form>
+        </section>
+        <footer>Survey completion is required to be considered for a seat.<br>Selected attendees will receive confirmation.</footer>
+    </main>
+</body>
+</html>

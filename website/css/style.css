@@ -456,7 +456,7 @@ nav {
     font-size:20px;
     color:#d8e0d4;
 }
-.hero .cta {
+.cta {
     border-radius:3px;
     background:linear-gradient(90deg,#c8cbc6,#fff);
     font-size:15px;
@@ -571,7 +571,7 @@ nav {
     .hero h1 {
         font-size:inherit;
     }
-    .hero .cta {
+    .cta {
         font-size:12px;
     }
     .platform-visual {
@@ -628,7 +628,7 @@ button,input,select,textarea {
         width:140px;
     }
 }
-.hero .cta {
+.cta {
     background:#eeff35;
     color:#101200;
     border-radius:999px;
@@ -638,11 +638,29 @@ button,input,select,textarea {
     justify-content:center;
     gap:20px;
 }
-.hero .cta:hover {
+.cta:hover {
     background:#f5ff69;
     box-shadow:0 0 32px #eaff3540;
 }
-.hero .cta:focus-visible {
+.cta:focus-visible {
     outline:3px solid white;
     outline-offset:5px;
 }
+
+/* Event anchor and registration page */
+#event { scroll-margin-top:24px; }
+@media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+.registration-main { min-height:calc(100vh - 100px); display:grid; place-items:center; padding:48px 20px; }
+.registration-card { width:100%; max-width:480px; padding:32px 26px; border:1px solid #29412e; border-radius:12px; background:linear-gradient(160deg,#050906,#08190e); }
+.registration-card h1 { font-size:30px; letter-spacing:-1px; line-height:1.2; margin:0 0 14px; }
+.registration-card p { color:var(--muted); line-height:1.6; }
+.registration-form label { display:block; font-size:13px; margin:20px 0 8px; }
+.registration-form input { width:100%; min-width:0; min-height:58px; padding:16px; background:#101211; color:var(--text); border:1px solid #354038; border-radius:12px; font-size:16px; }
+.registration-form input:focus { outline:2px solid #eeff35; outline-offset:2px; }
+.phone-field { display:flex; align-items:center; border:1px solid #354038; border-radius:12px; background:#101211; }
+.phone-prefix { padding:16px 12px; white-space:nowrap; border-right:1px solid #354038; font-weight:700; }
+.phone-field input { border:0; border-radius:0 12px 12px 0; }
+.registration-form .cta { width:100%; border:0; cursor:pointer; }
+.registration-form .cta:disabled { opacity:.65; cursor:wait; }
+.form-status { font-size:14px; }
+.registration-card .back-link { display:inline-block; margin-top:16px; font-size:13px; text-decoration:underline; }

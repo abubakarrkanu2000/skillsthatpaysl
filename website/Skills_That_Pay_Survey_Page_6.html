@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Question 6 — Skills That Pay</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/survey.css">
+        <script src="js/system-config.js" defer></script>
+    <script src="js/api.js" defer></script>
+    <script src="js/survey.js" defer></script>
+</head>
+<body class="survey-page" data-question="6">
+    <header class="site-header">
+        <a class="brand" href="index.html" aria-label="Skills That Pay home"><img src="assets/images/stp-2026.png" alt="STP 2026" width="218" height="27"></a>
+        <a class="event-link" href="index.html#event">EVENT DETAILS ↗</a>
+    </header>
+    <main>
+        <section class="question-card">
+            <a class="back-link" href="Skills_That_Pay_Survey_Page_5.html">← Back</a>
+            <p class="progress">QUESTION 6 OF 8</p>
+            <form id="survey-form" data-key="goal">
+                <fieldset aria-describedby="question-help">
+                    <legend id="question-title">If you could achieve ONE thing financially or professionally in the next 3–6 months, what would it be?</legend>
+                    <p class="helper" id="question-help">A simple answer is enough. For example: get your first paying client, start freelancing, or learn a skill you can earn from.</p>
+                    <textarea name="goal" aria-labelledby="question-title" aria-describedby="question-help" placeholder="My goal is to…" maxlength="2000" required></textarea>
+                </fieldset>
+                <button type="submit">Next <span aria-hidden="true">→</span></button>
+                <p class="status" id="survey-status" role="status" aria-live="polite"></p>
+            </form>
+        </section>
+        <footer>Survey completion is required to be considered for a seat.<br>Selected attendees will receive confirmation.</footer>
+    </main>
+</body>
+</html>

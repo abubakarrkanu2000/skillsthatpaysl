@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Question 7 — Skills That Pay</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/survey.css">
+        <script src="js/system-config.js" defer></script>
+    <script src="js/api.js" defer></script>
+    <script src="js/survey.js" defer></script>
+</head>
+<body class="survey-page" data-question="7">
+    <header class="site-header">
+        <a class="brand" href="index.html" aria-label="Skills That Pay home"><img src="assets/images/stp-2026.png" alt="STP 2026" width="218" height="27"></a>
+        <a class="event-link" href="index.html#event">EVENT DETAILS ↗</a>
+    </header>
+    <main>
+        <section class="question-card">
+            <a class="back-link" href="Skills_That_Pay_Survey_Page_6.html">← Back</a>
+            <p class="progress">QUESTION 7 OF 8</p>
+            <form id="survey-form" data-key="future_investment">
+                <fieldset aria-describedby="question-help">
+                    <legend id="question-title">How much would you feel comfortable investing in a future training programme?</legend>
+                    <p class="helper" id="question-help">This event is free. Your answer helps us plan future training and does not affect seat selection.</p>
+                    <div class="choices">
+                    <label class="choice"><input type="radio" name="future_investment" value="Free only" required><span class="letter" aria-hidden="true">A</span><span>Free only</span></label>
+                    <label class="choice"><input type="radio" name="future_investment" value="Under NLe 200" required><span class="letter" aria-hidden="true">B</span><span>Under NLe 200</span></label>
+                    <label class="choice"><input type="radio" name="future_investment" value="NLe 200–350" required><span class="letter" aria-hidden="true">C</span><span>NLe 200–350</span></label>
+                    <label class="choice"><input type="radio" name="future_investment" value="NLe 351–500" required><span class="letter" aria-hidden="true">D</span><span>NLe 351–500</span></label>
+                    <label class="choice"><input type="radio" name="future_investment" value="NLe 501–750" required><span class="letter" aria-hidden="true">E</span><span>NLe 501–750</span></label>
+                    <label class="choice"><input type="radio" name="future_investment" value="NLe 751–1,000" required><span class="letter" aria-hidden="true">F</span><span>NLe 751–1,000</span></label>
+                    <label class="choice"><input type="radio" name="future_investment" value="More than NLe 1,000" required><span class="letter" aria-hidden="true">G</span><span>More than NLe 1,000</span></label>
+                </div>
+                </fieldset>
+                <button type="submit">Next <span aria-hidden="true">→</span></button>
+                <p class="status" id="survey-status" role="status" aria-live="polite"></p>
+            </form>
+        </section>
+        <footer>Survey completion is required to be considered for a seat.<br>Selected attendees will receive confirmation.</footer>
+    </main>
+</body>
+</html>
