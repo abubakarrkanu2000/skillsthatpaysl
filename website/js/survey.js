@@ -70,10 +70,12 @@
             status.textContent='Submitting your survey…';
             const { submitted, ...surveyAnswers } = answers;
             await STP_API.rpc('stp_submit_survey',{r_id:registration.id,r_token:registration.token,r_answers:surveyAnswers});
+            window.STP_ANALYTICS?.track('survey_complete');
             answers.submitted=true;
             sessionStorage.setItem(storageKey,JSON.stringify(answers));
             window.location.assign('Skills_That_Pay_Survey_Complete.html');
         } catch (error) {
+            window.STP_ANALYTICS?.track('survey_error');
             status.textContent = error.message || 'We couldn’t submit your survey. Please try again.';
             status.classList.add('error');
             button.disabled = false;

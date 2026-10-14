@@ -1,6 +1,6 @@
 (() => {
   const form=document.getElementById('registration-form'),phone=document.getElementById('phone'),error=document.getElementById('phone-error'),status=document.getElementById('form-status'),button=form.querySelector('button');
-  function validate(){const message=STP_API.phone(phone.value)?'':'Enter a Sierra Leone mobile number, such as 078 123456. Use 9 digits with the first 0, or 8 without it.';phone.setCustomValidity(message);phone.setAttribute('aria-invalid',String(Boolean(message)));error.textContent=message;return !message;}
+  function validate(){const message=STP_API.phone(phone.value)?'':'Enter a Sierra Leone mobile number, such as 078 123456. Use 9 digits with the first 0, or 8 without it.';phone.setCustomValidity(message);phone.setAttribute('aria-invalid',String(Boolean(message)));error.textContent=message;if(message)window.STP_ANALYTICS?.track('validation_error');return !message;}
   phone.addEventListener('input',()=>{validate();status.textContent='';});
   phone.addEventListener('invalid',validate);
   try{const details=JSON.parse(sessionStorage.getItem('stp-registration')||'null');if(details){form.elements.full_name.value=details.full_name;form.elements.email.value=details.email;phone.value=details.phone;}}catch{}
@@ -21,7 +21,8 @@
       const id=await STP_API.rpc('stp_register',{r_full_name:details.full_name,r_email:details.email,r_phone:details.phone,r_token:draft.token});
       sessionStorage.setItem('stp-registration',JSON.stringify({...draft,id}));
       sessionStorage.removeItem('stp-registration-draft');
+window.STP_ANALYTICS?.track('registration_saved');
       window.location.assign('Skills_That_Pay_Survey_Page_1.html');
-    }catch(e){status.textContent=e.message||'We couldn’t save your registration. Please try again.';button.disabled=false;}
+    }catch(e){window.STP_ANALYTICS?.track('registration_error');status.textContent=e.message||'We couldn’t save your registration. Please try again.';button.disabled=false;}
   });
 })();

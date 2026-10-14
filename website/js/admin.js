@@ -22,10 +22,10 @@
     function openProfile(id) {
       const a=attendees.find(a=>a.id===id); activeId=id;
       document.getElementById('profile-name').textContent=a.name;
-      const fields=[['Email',a.email],['WhatsApp number',a.phone],['Guest type',a.type],['Registration source',a.manual?'Added by admin':'Website registration'],['Survey',a.manual?'Not required — directly invited guest':a.complete?'Complete':'Incomplete'],['Attendance number',a.number],['Notes',a.notes],['Other current situation',a.other.current_situation_other],['Other skill interest',a.other.skill_interest_other],['Other obstacle',a.other.biggest_obstacle_other],['Age',a.age],['Current situation',a.situation],['Skill interest',a.skill],['Income from a skill',a.income],['Biggest obstacle',a.obstacle],['Goal for the next 3–6 months',a.goal],['Future training investment · research only',a.investment],['Expert requested for the next event',a.expert]];
+      const fields=[['Email',a.email],['WhatsApp number',a.phone],['Guest type',a.type],['Registration source',a.manual?'Added by admin':'Website registration'],['Survey',a.manual?'Not required — directly invited guest':a.complete?'Complete':'Incomplete'],['Attendance number',a.number||'No active number'],['Notes',a.notes],['Other current situation',a.other.current_situation_other],['Other skill interest',a.other.skill_interest_other],['Other obstacle',a.other.biggest_obstacle_other],['Age',a.age],['Current situation',a.situation],['Skill interest',a.skill],['Income from a skill',a.income],['Biggest obstacle',a.obstacle],['Goal for the next 3–6 months',a.goal],['Future training investment · research only',a.investment],['Expert requested for the next event',a.expert]];
       document.getElementById('details').innerHTML=fields.map(([label,value])=>`<dt>${escape(label)}</dt><dd>${escape(value||'Not provided')}</dd>`).join('');
       document.getElementById('profile-status').innerHTML=statuses.map(s=>`<option ${s===a.status?'selected':''}>${escape(s)}</option>`).join('');
-      document.getElementById('profile-notice').textContent='Confirm only after the guest agrees to attend. Confirmation assigns an attendance number; messages are handled separately.';
+      document.getElementById('profile-notice').textContent='Cancelled removes the number from active use and frees the seat. The original number remains internally and is restored if this same guest is confirmed again.';
       dialog.showModal();
     }
     [search,statusFilter,skillFilter].forEach(el=>el.addEventListener('input',render));
@@ -82,12 +82,13 @@
       finally{button.disabled=false;}
     });
 
-    function normalise(record){const a=record.answers||{};return {id:record.id,name:record.full_name,email:record.email||'',phone:record.phone||'',type:record.guest_type,status:record.status,notes:record.notes,manual:record.source==='Admin',complete:record.survey_complete,number:record.attendance_number||'',age:a.age,situation:a.current_situation,skill:a.skill_interest||'',income:a.skill_income,obstacle:a.biggest_obstacle,goal:a.goal,investment:a.future_investment,expert:a.next_expert,other:a};}
+    function normalise(record){const a=record.answers||{};return {id:record.id,name:record.full_name,email:record.email||'',phone:record.phone||'',type:record.guest_type,status:record.status,notes:record.notes,manual:record.source==='Admin',complete:record.survey_complete,number:['Confirmed','Attended'].includes(record.status)?record.attendance_number||'':'',historicalNumber:record.attendance_number||'',age:a.age,situation:a.current_situation,skill:a.skill_interest||'',income:a.skill_income,obstacle:a.biggest_obstacle,goal:a.goal,investment:a.future_investment,expert:a.next_expert,other:a};}
     async function load(){
       const [records,configuration]=await Promise.all([STP_API.list('stp_registrations'),STP_API.list('stp_settings')]);
       attendees=records.map(normalise);settings=configuration[0];render();
       document.getElementById('registration-state').textContent=settings.registration_open?'Registration is open':'Registration is closed';
       document.getElementById('toggle-registration').textContent=settings.registration_open?'Close registration':'Open registration';
+await loadAnalytics();
     }
     const loginPanel=document.getElementById('login-panel'),app=document.getElementById('admin-app'),loginForm=document.getElementById('login-form');
     async function openAdmin(){
@@ -111,3 +112,15 @@
       finally{button.disabled=false;}
     });
     if(STP_API.session())openAdmin().catch(error=>{document.getElementById('login-status').textContent=error.message;});
+
+async function loadAnalytics(){
+ const status=document.getElementById('analytics-status');
+ try{
+  const a=await STP_API.rpc('stp_analytics_report',{r_days:Number(document.getElementById('analytics-range').value)},true);
+  document.getElementById('analytics-counts').innerHTML=[['Estimated visitors',a.visitors],['Visits',a.visits],['Registration starts',a.started],['Details saved',a.saved],['Surveys submitted',a.completed],['Visits with errors',a.errors]].map(([label,value])=>`<div class="stat"><p>${label}</p><strong>${value}</strong></div>`).join('');
+  document.getElementById('analytics-steps').innerHTML=a.questions.map(q=>`<tr><td>Question ${q.question}</td><td>${q.viewed}</td><td>${q.continued}</td><td>${q.pending}</td></tr>`).join('');
+  document.getElementById('analytics-sources').textContent=a.sources.length?a.sources.map(s=>`${s.source}: ${s.visits} visits`).join(' · '):'No traffic recorded yet.';
+  status.textContent='Tracking starts after installation. Visitors are estimated browsers. No next step yet includes people still completing the survey.';
+ }catch(e){status.textContent='Analytics unavailable. Run backend/analytics-update.sql in Supabase and refresh. Registration management still works.';}
+}
+document.getElementById('analytics-range').addEventListener('change',loadAnalytics);

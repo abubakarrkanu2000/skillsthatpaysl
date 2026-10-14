@@ -105,7 +105,13 @@
       <div class="stat confirmed"><p>Confirmed attendees</p><strong id="confirmed">0</strong><small id="seat-summary">50 public + 20 reserved seats</small></div>
       <div class="stat"><p>Waitlisted</p><strong id="waitlisted">0</strong><small>Awaiting an available place</small></div>
     </section>
-    <section class="panel" aria-labelledby="attendees-title">
+    <section class="panel" style="margin-bottom:28px;padding:25px" aria-labelledby="analytics-title">
+<div class="panel-heading" style="padding:0 0 20px"><div><h2 id="analytics-title">Website analytics</h2><p>Visits and registration progress</p></div><select id="analytics-range" style="width:150px" aria-label="Analytics period"><option value="1">Last 24 hours</option><option value="7">Last 7 days</option><option value="30" selected>Last 30 days</option><option value="90">Last 90 days</option></select></div>
+<div class="stats" id="analytics-counts" style="color:#f4f7f2"></div>
+<div class="table-scroll"><table><thead><tr><th>Survey step</th><th>Visits reaching it</th><th>Reached next step</th><th>No next step yet</th></tr></thead><tbody id="analytics-steps"></tbody></table></div>
+<p id="analytics-sources" style="font-size:12px;line-height:1.8"></p><p id="analytics-status" role="status" style="font-size:12px;color:#69786e;line-height:1.7"></p>
+</section>
+<section class="panel" aria-labelledby="attendees-title">
       <div class="panel-heading"><div><h2 id="attendees-title">Registrations</h2><p>Open a profile to review survey answers and update its status.</p></div><span class="count" id="count"></span></div>
       <div class="filters">
         <div class="search"><label for="search">Search attendees</label><input id="search" type="search" placeholder="Name, email, phone or attendance number"></div>
