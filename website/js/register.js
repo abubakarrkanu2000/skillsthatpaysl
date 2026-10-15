@@ -1,6 +1,6 @@
 (() => {
   const form=document.getElementById('registration-form'),phone=document.getElementById('phone'),error=document.getElementById('phone-error'),status=document.getElementById('form-status'),button=form.querySelector('button');
-  function validate(){const message=STP_API.phone(phone.value)?'':'Enter a Sierra Leone mobile number, such as 078 123456. Use 9 digits with the first 0, or 8 without it.';phone.setCustomValidity(message);phone.setAttribute('aria-invalid',String(Boolean(message)));error.textContent=message;if(message)window.STP_ANALYTICS?.track('validation_error');return !message;}
+  function validate(){const message=STP_API.phone(phone.value)?'':'Enter a Sierra Leone mobile number, such as 078 123456. Use 9 digits with the first 0, or 8 without it.';phone.setCustomValidity(message);phone.setAttribute('aria-invalid',String(Boolean(message)));error.textContent=message;return !message;}
   phone.addEventListener('input',()=>{validate();status.textContent='';});
   phone.addEventListener('invalid',validate);
   try{const details=JSON.parse(sessionStorage.getItem('stp-registration')||'null');if(details){form.elements.full_name.value=details.full_name;form.elements.email.value=details.email;phone.value=details.phone;}}catch{}
