@@ -44,11 +44,26 @@ window.STP_API = (() => {
       all.push(...batch);if(batch.length<500)return all;
     }
   }
-  function phone(raw) {
-    const compact=raw.trim().replace(/[\s()-]/g,'');
-    const match=compact.match(/^(?:\+232|00232|232)?0?((?:25|30|31|32|33|34|35|70|72|73|74|75|76|77|78|79|88)[0-9]{6})$/);
-    return match?'+232'+match[1]:null;
+ function phone(raw) {
+  let number = String(raw ?? '').trim().replace(/[\s()-]/g, '');
+
+  // Remove the country code, when supplied.
+  number = number.replace(/^(?:\+232|00232|232)/, '');
+
+  // Remove the local leading zero.
+  if (number.startsWith('0') && number.length === 9) {
+    number = number.slice(1);
   }
-  function randomToken(){return [...crypto.getRandomValues(new Uint8Array(32))].map(n=>n.toString(16).padStart(2,'0')).join('');}
-  return {rpc,login,logout,list,session,phone,randomToken};
+
+  // Accept exactly eight digits, regardless of network prefix.
+  return /^[0-9]{8}$/.test(number) ? '+232' + number : null;
+}
+  function randomToken() {
+    return [...crypto.getRandomValues(new Uint8Array(32))]
+      .map(n => n.toString(16).padStart(2, '0'))
+      .join('');
+  }
+
+  return { rpc, login, logout, list, session, phone, randomToken };
 })();
+
