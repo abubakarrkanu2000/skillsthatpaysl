@@ -76,10 +76,15 @@
     .toast { font-size:12px; color:var(--green); margin-top:20px; min-height:20px; }
     @media(max-width:850px) { .stats { grid-template-columns:repeat(2,1fr); } .filters { grid-template-columns:1fr 1fr; } .search { grid-column:1/-1; } .heading { align-items:flex-start; } }
     @media(max-width:520px) { header { padding:21px 20px; } header img { width:140px; } .admin-label { font-size:10px; } main { padding:30px 16px; } .heading { display:block; } .gold { margin-top:19px; } .stat { padding:17px; } .stat strong { font-size:29px; } .panel-heading { padding:22px 18px 18px; } .filters { padding:0 18px 20px; grid-template-columns:1fr; } .search { grid-column:auto; } .bottom { display:block; } }
+    #survey-editor summary { cursor:pointer; font-size:14px; font-weight:700; }
+    #survey-editor textarea { width:100%; font:inherit; font-size:12px; padding:11px 13px; border:1px solid #d6dfd8; border-radius:8px; resize:vertical; }
+    #survey-editor textarea:focus-visible { outline:3px solid #09af67; outline-offset:3px; }
+    .survey-actions { display:flex; flex-wrap:wrap; gap:10px; }
+    #survey-edit-notice { color:#9b5f36; }
   </style>
     <script src="js/system-config.js" defer></script>
     <script src="js/api.js" defer></script>
-    <script src="js/admin.js" defer></script>
+    <script src="js/admin.js?v=survey-editor-20261018" defer></script>
 </head>
 <body>
   <header>
@@ -128,6 +133,34 @@
   <dialog id="profile" aria-labelledby="profile-name">
     <div class="dialog-top"><div><div class="eyebrow" style="color:#07864d">ATTENDEE PROFILE</div><h2 id="profile-name" style="margin-top:10px"></h2></div><button class="close" aria-label="Close profile" id="close">×</button></div>
     <dl id="details"></dl>
+    <details id="survey-editor" class="status-edit">
+      <summary>Edit survey answers</summary>
+      <form id="survey-edit-form" class="guest-form">
+        <p>Enter answers supplied by this attendee in chat. Save a draft while collecting answers, or mark complete after all eight questions are answered. Attendance status is saved separately.</p>
+<label for="answer-age">Age</label>
+<input id="answer-age" name="age" type="number" min="17" max="120" step="1">
+<label for="answer-current_situation">Current situation</label>
+<select id="answer-current_situation" name="current_situation"><option value="">Not answered</option><option>Secondary-school student</option><option>Secondary-school graduate</option><option>University or college student</option><option>Graduate</option><option>Employed</option><option>Freelancer</option><option>Business owner</option><option>Other</option></select>
+<div data-other-for="current_situation" hidden><label for="answer-current_situation-other">Please describe “Other”</label><input id="answer-current_situation-other" name="current_situation_other" maxlength="200"></div>
+<label for="answer-skill_interest">Skill interest</label>
+<select id="answer-skill_interest" name="skill_interest"><option value="">Not answered</option><option>Tech &amp; websites</option><option>Marketing &amp; branding</option><option>Photography &amp; videography</option><option>Trading</option><option>Other</option><option>I’m not sure yet</option></select>
+<div data-other-for="skill_interest" hidden><label for="answer-skill_interest-other">Please describe “Other”</label><input id="answer-skill_interest-other" name="skill_interest_other" maxlength="200"></div>
+<label for="answer-skill_income">Income from a skill</label>
+<select id="answer-skill_income" name="skill_income"><option value="">Not answered</option><option>Yes, regularly</option><option>Sometimes</option><option>Not yet, but I already have a skill</option><option>No, I’m still figuring out what to learn</option></select>
+<label for="answer-biggest_obstacle">Biggest obstacle</label>
+<select id="answer-biggest_obstacle" name="biggest_obstacle"><option value="">Not answered</option><option>I don’t know what skill to learn</option><option>I need to improve my skill</option><option>I don’t know how to find customers</option><option>I don’t know how to sell or market myself</option><option>I don’t have enough money or resources to start</option><option>I don’t know where to begin</option><option>Other</option></select>
+<div data-other-for="biggest_obstacle" hidden><label for="answer-biggest_obstacle-other">Please describe “Other”</label><input id="answer-biggest_obstacle-other" name="biggest_obstacle_other" maxlength="200"></div>
+<label for="answer-goal">Goal for the next 3–6 months</label>
+<textarea id="answer-goal" name="goal" maxlength="2000" rows="3"></textarea>
+<label for="answer-future_investment">Future training investment · research only</label>
+<select id="answer-future_investment" name="future_investment"><option value="">Not answered</option><option>Free only</option><option>Under NLe 200</option><option>NLe 200–350</option><option>NLe 351–500</option><option>NLe 501–750</option><option>NLe 751–1,000</option><option>More than NLe 1,000</option></select>
+<label for="answer-next_expert">Expert requested for the next event</label>
+<textarea id="answer-next_expert" name="next_expert" maxlength="2000" rows="3"></textarea>
+        <div class="survey-actions"><button class="save" type="submit" value="draft">Save draft answers</button><button class="save" type="submit" value="complete">Save and mark complete</button></div>
+        <p id="survey-edit-notice" role="status" aria-live="polite"></p>
+      </form>
+    </details>
+
     <div class="status-edit"><label for="profile-status">Attendance status</label><select id="profile-status"></select><button class="save" id="save">Save status</button><p id="profile-notice" role="status" style="font-size:12px;color:#9b5f36;line-height:1.6"></p></div>
   </dialog>
   <dialog id="guest-dialog" aria-labelledby="guest-title">

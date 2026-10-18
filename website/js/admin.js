@@ -26,7 +26,8 @@
       document.getElementById('details').innerHTML=fields.map(([label,value])=>`<dt>${escape(label)}</dt><dd>${escape(value||'Not provided')}</dd>`).join('');
       document.getElementById('profile-status').innerHTML=statuses.map(s=>`<option ${s===a.status?'selected':''}>${escape(s)}</option>`).join('');
       document.getElementById('profile-notice').textContent='Cancelled removes the number from active use and frees the seat. The original number remains internally and is restored if this same guest is confirmed again.';
-      dialog.showModal();
+      populateSurveyEditor(a);
+      if (!dialog.open) dialog.showModal();
     }
     [search,statusFilter,skillFilter].forEach(el=>el.addEventListener('input',render));
     document.getElementById('rows').addEventListener('click',async event=>{
@@ -82,7 +83,7 @@
       finally{button.disabled=false;}
     });
 
-    function normalise(record){const a=record.answers||{};return {id:record.id,name:record.full_name,email:record.email||'',phone:record.phone||'',type:record.guest_type,status:record.status,notes:record.notes,manual:record.source==='Admin',complete:record.survey_complete,number:['Confirmed','Attended'].includes(record.status)?record.attendance_number||'':'',historicalNumber:record.attendance_number||'',age:a.age,situation:a.current_situation,skill:a.skill_interest||'',income:a.skill_income,obstacle:a.biggest_obstacle,goal:a.goal,investment:a.future_investment,expert:a.next_expert,other:a};}
+    function normalise(record){const a=record.answers||{};return {id:record.id,name:record.full_name,email:record.email||'',phone:record.phone||'',type:record.guest_type,status:record.status,notes:record.notes,manual:record.source==='Admin',complete:record.survey_complete,number:['Confirmed','Attended'].includes(record.status)?record.attendance_number||'':'',historicalNumber:record.attendance_number||'',age:a.age,situation:a.current_situation,skill:a.skill_interest||'',income:a.skill_income,obstacle:a.biggest_obstacle,goal:a.goal,investment:a.future_investment,expert:a.next_expert,other:a,rawAnswers:record.answers};}
     async function load(){
       const [records,configuration]=await Promise.all([STP_API.list('stp_registrations'),STP_API.list('stp_settings')]);
       attendees=records.map(normalise);settings=configuration[0];render();
@@ -124,3 +125,68 @@ async function loadAnalytics(){
  }catch(e){status.textContent='Analytics unavailable. Run backend/analytics-update.sql in Supabase and refresh. Registration management still works.';}
 }
 document.getElementById('analytics-range').addEventListener('change',loadAnalytics);
+
+// Admin-assisted survey entry. Status changes remain a separate action.
+const surveyEditForm = document.getElementById('survey-edit-form');
+const surveyAnswerKeys = ['age', 'current_situation', 'skill_interest', 'skill_income', 'biggest_obstacle', 'goal', 'future_investment', 'next_expert'];
+let surveyOriginalAnswers = null;
+function updateSurveyOtherFields() {
+  for (const box of surveyEditForm.querySelectorAll('[data-other-for]')) {
+    const selected = surveyEditForm.elements.namedItem(box.dataset.otherFor).value === 'Other';
+    box.hidden = !selected;
+    box.querySelector('input').disabled = !selected;
+  }
+}
+function populateSurveyEditor(attendee) {
+  surveyEditForm.reset();
+  surveyOriginalAnswers = attendee.rawAnswers;
+  const answers = attendee.rawAnswers || {};
+  for (const field of surveyEditForm.elements) {
+    if (field.name) field.value = answers[field.name] ?? '';
+  }
+  updateSurveyOtherFields();
+  document.getElementById('survey-editor').open = false;
+  document.getElementById('survey-edit-notice').textContent = '';
+}
+surveyEditForm.addEventListener('change', updateSurveyOtherFields);
+surveyEditForm.addEventListener('submit', async event => {
+  event.preventDefault();
+  const complete = event.submitter?.value === 'complete';
+  const values = new FormData(surveyEditForm);
+  const answers = {};
+  for (const key of surveyAnswerKeys) {
+    const value = String(values.get(key) ?? '').trim();
+    if (value) answers[key] = key === 'age' ? Number(value) : value;
+    if (value === 'Other') answers[key + '_other'] = String(values.get(key + '_other') ?? '').trim();
+  }
+  if (complete && surveyAnswerKeys.some(key => !String(answers[key] ?? '').trim() ||
+      (answers[key] === 'Other' && !answers[key + '_other']))) {
+    document.getElementById('survey-edit-notice').textContent = 'Answer all eight questions, including any Other descriptions, before marking complete.';
+    return;
+  }
+  const buttons = [...surveyEditForm.querySelectorAll('button')];
+  buttons.forEach(button => { button.disabled = true; });
+  document.getElementById('save').disabled = true;
+  document.getElementById('close').disabled = true;
+  const id = activeId;
+  let saved = false;
+  try {
+    const record = await STP_API.rpc('stp_admin_save_survey', {
+      r_id: id, r_answers: answers, r_complete: complete,
+      r_expected_answers: surveyOriginalAnswers
+    }, true);
+    saved = true;
+    const updated = normalise(record);
+    attendees = attendees.map(attendee => attendee.id === id ? updated : attendee);
+    render();
+    openProfile(id);
+    document.getElementById('survey-editor').open = true;
+    document.getElementById('survey-edit-notice').textContent = complete ? 'Survey saved and marked complete. Attendance status was preserved unless it was Survey incomplete.' : 'Draft answers saved. The survey remains incomplete; attendance status is preserved.';
+  } catch (error) {
+    document.getElementById('survey-edit-notice').textContent = saved ? 'Answers were saved. Refresh the dashboard to see the updated record.' : error.message;
+  } finally {
+    buttons.forEach(button => { button.disabled = false; });
+    document.getElementById('save').disabled = false;
+    document.getElementById('close').disabled = false;
+  }
+});
