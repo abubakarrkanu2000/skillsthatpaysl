@@ -1,11 +1,22 @@
 /* Restore draft answers between pages and submit through the validated database RPC. */
 (() => {
     'use strict';
+    // Preserve progress from tabs opened before persistent storage was enabled.
+    try {
+        for (const key of ['stp-registration', 'stp-registration-draft', 'stp-survey']) {
+            const existing = sessionStorage.getItem(key);
+            if (existing !== null && localStorage.getItem(key) === null) {
+                localStorage.setItem(key, existing);
+            }
+        }
+    } catch {
+        // Existing storage error handling below remains in place.
+    }
     const storageKey = 'stp-survey';
     const question = Number(document.body.dataset.question);
     const keys = ['age', 'current_situation', 'skill_interest', 'skill_income', 'biggest_obstacle', 'goal', 'future_investment', 'next_expert'];
     const page = number => `Skills_That_Pay_Survey_Page_${number}.html`;
-    const read = key => JSON.parse(sessionStorage.getItem(key) || '{}');
+    const read = key => JSON.parse(localStorage.getItem(key) || '{}');
     const form = document.getElementById('survey-form');
     const status = document.getElementById('survey-status');
     let answers;
@@ -61,7 +72,7 @@
         const button = form.querySelector('button[type="submit"]');
         button.disabled = true;
         try {
-            sessionStorage.setItem(storageKey, JSON.stringify(answers));
+            localStorage.setItem(storageKey, JSON.stringify(answers));
             if (question < 8) { window.location.assign(page(question + 1)); return; }
             const missing = keys.findIndex(answerKey => !String(answers[answerKey] ?? '').trim());
             if (missing !== -1) { window.location.assign(page(missing + 1)); return; }
@@ -72,7 +83,7 @@
             await STP_API.rpc('stp_submit_survey',{r_id:registration.id,r_token:registration.token,r_answers:surveyAnswers});
             window.STP_ANALYTICS?.track('survey_complete');
             answers.submitted=true;
-            sessionStorage.setItem(storageKey,JSON.stringify(answers));
+            localStorage.setItem(storageKey,JSON.stringify(answers));
             window.location.assign('Skills_That_Pay_Survey_Complete.html');
         } catch (error) {
             window.STP_ANALYTICS?.track('survey_error');
